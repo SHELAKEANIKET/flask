@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Product List</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
-    />
-  </head>
-  <body>
-    <div class="container mt-5">
-      <h2 class="text-center">Products List</h2>
+{% extends 'base.html' %}
 
+{% block title %}Product List{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Products List</h2>
       <div class="table-responsive my-4">
         <table class="table table-bordered table-hover">
           <thead class="table-dark">
@@ -22,8 +13,8 @@
               <th>Product Name</th>
               <th>Description</th>
               <th>Quantity</th>
-              <th>Weight</th>
-              <th>Rate</th>
+              <th>Weight (lt)</th>
+              <th>Rate (per unit)</th>
               <th>Amount</th>
               <th>Actions</th>
             </tr>
@@ -32,16 +23,24 @@
             {% if data %} {% for product in data %}
             <tr>
               <td>{{ loop.index }}</td>
-              <td>{{ product[0] }}</td>
               <td>{{ product[1] }}</td>
               <td>{{ product[2] }}</td>
               <td>{{ product[3] }}</td>
               <td>{{ product[4] }}</td>
               <td>{{ product[5] }}</td>
               <td>{{ product[6] }}</td>
+              <td>{{ product[7] }}</td>
               <td>
-                <a href="/edit_product/{{ product.id }}" class="btn btn-warning btn-sm">Edit</a>
-                <a href="/delete_product/{{ product.id }}" class="btn btn-danger btn-sm">Delete</a>
+                <a
+                  href="/edit_product/{{ product[0] }}"
+                  class="btn btn-warning btn-sm"
+                  >Edit</a
+                >
+                <a
+                  href="/delete_product/{{ product[0] }}"
+                  class="btn btn-danger btn-sm"
+                  >Delete</a
+                >
               </td>
             </tr>
             {% endfor %} {% else %}
@@ -52,6 +51,4 @@
           </tbody>
         </table>
       </div>
-    </div>
-  </body>
-</html>
+{% endblock %}

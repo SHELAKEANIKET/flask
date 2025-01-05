@@ -14,6 +14,7 @@ mysql = MySQL(app)
 def dashboard():
     return render_template('dashboard.html')
 
+# ! Product =>
 # add product
 @app.route('/add_product', methods=['GET', 'POST'])
 def add_product():
@@ -36,7 +37,7 @@ def add_product():
 def edit_product(id):
     curr = mysql.connection.cursor()
     curr.execute('''SELECT * FROM products WHERE id = %s''', (id,))
-    data = curr.fetchall()
+    product = curr.fetchone()
     curr.close()
     if request.method == 'POST':
         supplier = request.form['supplier']
@@ -51,7 +52,7 @@ def edit_product(id):
         mysql.connection.commit()
         curr.close()
         return redirect('/products_list')
-    return render_template('edit_product.html', data=data)
+    return render_template('edit_product.html', product=product)
 
 # delete product
 @app.route('/delete_product/<int:id>', methods=['GET', 'POST'])
@@ -66,10 +67,62 @@ def delete_product(id):
 @app.route('/products_list', methods=['GET', 'POST'])
 def view_products():
     curr = mysql.connection.cursor()
-    curr.execute('''SELECT * FROM products''')
+    curr.execute("SELECT id, supplier, name, description, quantity, weight, rate, amount FROM products")
     data = curr.fetchall()
     curr.close()
     return render_template('product_list.html', data=data)
+
+# ! Customer =>
+# add customer
+@app.route('/add_customer', methods=['GET', 'POST'])
+def add_customer():
+    if request.method == 'POST':
+        curr = mysql.connection.cursor()
+        customer = request.form['customer'] # customer name
+        name = request.form['name'] # product name
+        quantity = request.form['quantity']
+        amount = request.form['amount']
+        curr.execute('''INSERT INTO customers (customer, name, quantity, amount) VALUES (%s, %s, %s, %s)''', (customer, name, quantity, amount))
+        mysql.connection.commit()
+        curr.close()
+    return render_template('add_customer.html')
+
+# edit customer
+@app.route('/edit_customer/<int:id>', methods=['GET', 'POST'])
+def edit_customer(id):
+    curr = mysql.connection.cursor()
+    curr.execute('''SELECT * FROM customers WHERE id = %s''', (id,))
+    customer = curr.fetchone()
+    curr.close()
+    if request.method == 'POST':
+        customer = request.form['customer'] # customer name
+        name = request.form['name'] # product name
+        quantity = request.form['quantity']
+        amount = request.form['amount']
+        curr = mysql.connection.cursor()
+        curr.execute('''UPDATE customers SET customer = %s, name = %s, quantity = %s, amount = %s WHERE id = %s''', (customer, name, quantity, amount, id))
+        mysql.connection.commit()
+        curr.close()
+        return redirect('/customers_list')
+    return render_template('edit_customer.html', customer=customer)
+
+# delete product
+@app.route('/delete_customer/<int:id>', methods=['GET', 'POST'])
+def delete_customer(id):
+    curr = mysql.connection.cursor()
+    curr.execute('''DELETE FROM customers WHERE id = %s''', (id,))
+    mysql.connection.commit()
+    curr.close()
+    return redirect('/customers_list')
+
+# view products
+@app.route('/customers_list', methods=['GET', 'POST'])
+def view_customers():
+    curr = mysql.connection.cursor()
+    curr.execute("SELECT id, customer, name, quantity, amount FROM customers")
+    data = curr.fetchall()
+    curr.close()
+    return render_template('customer_list.html', data=data)
 
 if __name__ == "__main__":
     app.run(debug=True)

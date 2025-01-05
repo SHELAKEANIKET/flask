@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Product{% endblock %}
+
+{% block content %}
+<h2 class="text-center">Edit Product</h2>
+      <form
+        action="/edit_product/{{ product[0] }}"
+        method="POST"
+        class="mt-4 mx-auto border p-4"
+      >
+        <!-- Supplier -->
+        <div class="mb-3">
+          <label for="supplier" class="form-label">Supplier</label>
+          <input
+            type="text"
+            class="form-control"
+            id="supplier"
+            name="supplier"
+            value="{{ product[1] }}"
+            required
+          />
+        </div>
+
+        <!-- Product Name -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Product Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            value="{{ product[2] }}"
+            required
+          />
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            rows="4"
+            required
+          >
+            {{ product[3] }}</textarea
+          >
+        </div>
+
+        <!-- Quantity -->
+        <div class="mb-3">
+          <label for="quantity" class="form-label">Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            id="quantity"
+            name="quantity"
+            value="{{ product[4] }}"
+            min="1"
+            required
+          />
+        </div>
+
+        <!-- Weight -->
+        <div class="mb-3">
+          <label for="weight" class="form-label">Weight (in kg)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="weight"
+            name="weight"
+            value="{{ product[5] }}"
+            step="0.01"
+            required
+          />
+        </div>
+
+        <!-- Rate -->
+        <div class="mb-3">
+          <label for="rate" class="form-label">Rate (per unit)</label>
+          <input
+            type="number"
+            class="form-control"
+            id="rate"
+            name="rate"
+            value="{{ product[6] }}"
+            step="0.01"
+            required
+          />
+        </div>
+
+        <!-- Amount -->
+        <div class="mb-3">
+          <label for="amount" class="form-label">Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            id="amount"
+            name="amount"
+            value="{{ product[7] }}"
+            step="0.01"
+            required
+          />
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Update Product</button>
+        </div>
+      </form>
+{% endblock %}
