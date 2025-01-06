@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+          <h2>Dashboard</h2>
+          <!-- Cards Section -->
+          <div class="row g-3">
+            <div class="col-md-3">
+              <div class="card text-center shadow-sm bg-primary text-white">
+                <div class="card-body">
+                  <h5 class="card-title">Total Products</h5>
+                  <p class="card-text display-6">{{ total_products }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card text-center shadow-sm bg-success text-white">
+                <div class="card-body">
+                  <h5 class="card-title">Total Suppliers</h5>
+                  <p class="card-text display-6">0</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card text-center shadow-sm bg-warning text-white">
+                <div class="card-body">
+                  <h5 class="card-title">Total Customers</h5>
+                  <p class="card-text display-6">{{ total_customers }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Table Section -->
+          <div class="row mt-5">
+            <div class="col">
+              <h4>Recent Products</h4>
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>Sr. No.</th>
+                      <th>Supplier Name</th>
+                      <th>Product Name</th>
+                      <th>Quantity</th>
+                      <th>Weight (lt)</th>
+                      <th>Rate (per unit)</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for product in products %}
+                    <tr>
+                      <td>{{ loop.index }}</td>
+                      <td>{{ product[1] }}</td>
+                      <td>{{ product[2] }}</td>
+                      <td>{{ product[4] }}</td>
+                      <td>{{ product[5] }}</td>
+                      <td>{{ product[6] }}</td>
+                      <td>{{ product[7] }}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-5">
+            <div class="col">
+              <h4>Recent Customers</h4>
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead class="table-dark">
+                    <tr>
+                      <th>Sr. No.</th>
+                      <th>Customer Name</th>
+                      <th>Product Name</th>
+                      <th>Quantity</th>
+                      <th>Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if customers %} {% for customer in customers %}
+                    <tr>
+                      <td>{{ loop.index }}</td>
+                      <td>{{ customer[1] }}</td>
+                      <td>{{ customer[2] }}</td>
+                      <td>{{ customer[3] }}</td>
+                      <td>{{ customer[4] }}</td>
+                    </tr>
+                    {% endfor %} {% else %}
+                    <tr>
+                      <td colspan="8" class="text-center">No Products Found</td>
+                    </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+</div>
+{% endblock %}
+
+  <body>
+    <div class="wrapper">
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h3>Dashboard</h3>
+        </div>
+        <ul class="list-unstyled components">
+          <li>
+            <a href="/" class="nav-link"
+              ><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a
+            >
+          </li>
+          <li>
+            <a href="/products_list" class="nav-link"
+              ><i class="fas fa-box me-2"></i>View Products</a
+            >
+          </li>
+          <li>
+            <a href="/add_product" class="nav-link"
+              ><i class="fas fa-plus-circle me-2"></i>Add Product</a
+            >
+          </li>
+          <li>
+            <a href="/customers_list" class="nav-link"
+              ><i class="fas fa-users me-2"></i>View Customers</a
+            >
+          </li>
+          <li>
+            <a href="/add_customer" class="nav-link"
+              ><i class="fas fa-user-plus me-2"></i>Add Customer</a
+            >
+          </li>
+          <li>
+            <a href="/" class="nav-link"
+              ><i class="fas fa-sign-out-alt me-2"></i>Logout</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <div class="content" id="content">
+  
+        </div>
+      </div>
+      <!-- Bootstrap JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+      <!-- Sidebar Toggle Script -->
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const sidebarCollapse = document.getElementById("sidebarCollapse");
+          const sidebar = document.getElementById("sidebar");
+
+          sidebarCollapse.addEventListener("click", function () {
+            sidebar.classList.toggle("active");
+          });
+        });
+      </script>
+    </div>
+  </body>
+</html>

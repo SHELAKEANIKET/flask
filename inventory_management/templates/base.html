@@ -1,63 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{% block title %}My Inventory{% endblock %}</title>
-    
+
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
 
     <!-- Additional CSS (if any) -->
     {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='dashboard.css') }}"
+    />
     {% endblock %}
-</head>
-<body>
-    <!-- Navbar (Optional) -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark text-white">
-        <div class="container-fluid">
-            <a class="navbar-brand text-info mx-4" href="#">Logo</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+  </head>
+  <body>
+    <div class="wrapper">
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <h3>SHREEPATI <span>enterprise</span></h3>
+        </div>
+        <ul class="list-unstyled components">
+          <li>
+            <a href="/" class="nav-link"
+              ><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a
+            >
+          </li>
+          <li>
+            <a href="/products_list" class="nav-link"
+              ><i class="fas fa-box me-2"></i>View Products</a
+            >
+          </li>
+          <li>
+            <a href="/add_product" class="nav-link"
+              ><i class="fas fa-plus-circle me-2"></i>Add Product</a
+            >
+          </li>
+          <li>
+            <a href="/customers_list" class="nav-link"
+              ><i class="fas fa-users me-2"></i>View Sale Inventory</a
+            >
+          </li>
+          <li>
+            <a href="/add_customer" class="nav-link"
+              ><i class="fas fa-user-plus me-2"></i>Add Sale Inventory</a
+            >
+          </li>
+          <li>
+            <a href="/" class="nav-link"
+              ><i class="fas fa-sign-out-alt me-2"></i>Logout</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+          <div class="container-fluid">
+            <!-- Sidebar Toggle Button (Hidden on Large Screens) -->
+            <button
+              type="button"
+              id="sidebarCollapse"
+              class="btn btn-info d-lg-none d-md-none"
+              style="margin: 10px"
+            >
+              <i class="fas fa-align-left"></i>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav text-white">
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/products_list">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="/add_product">Add Product</a>
-                    </li>
-                </ul>
+
+            <!-- Profile Dropdown -->
+            <div class="dropdown ms-auto">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="adminProfileDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fas fa-user"></i>
+              </button>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="adminProfileDropdown"
+              >
+                <li>
+                  <a class="dropdown-item" href="/">Profile</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="/">Logout</a>
+                </li>
+              </ul>
             </div>
-        </div>
-    </nav>
+          </div>
+        </nav>
 
-    <!-- Main Content -->
-    <div class="container my-4">
-        {% block content %}
-        <!-- Content will be inserted here -->
-        {% endblock %}
+        <div class="page-wrapper">
+          {% block content %}
+          <!-- Content will be inserted here -->
+          {% endblock %}
+        </div>
+      </div>
+
+      <!-- Bootstrap JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+      <!-- Sidebar Toggle Script -->
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const sidebarCollapse = document.getElementById("sidebarCollapse");
+          const sidebar = document.getElementById("sidebar");
+
+          sidebarCollapse.addEventListener("click", function () {
+            sidebar.classList.toggle("active");
+          });
+        });
+      </script>
+
+      <!-- Additional JS (if any) -->
+      {% block scripts %}
+      <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+      {% endblock %}
     </div>
-
-    <!-- Footer (Optional) -->
-    <footer class="footer py-3 bg-light">
-        <div class="container text-center">
-            <span class="text-muted">© 2025 Inventory Management</span>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Additional JS (if any) -->
-    {% block scripts %}
-    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
-    {% endblock %}
-</body>
+  </body>
 </html>

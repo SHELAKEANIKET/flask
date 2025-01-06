@@ -12,7 +12,20 @@ mysql = MySQL(app)
 # dashboard
 @app.route('/')
 def dashboard():
-    return render_template('dashboard.html')
+    cur = mysql.connection.cursor()
+    cur.execute("SELECT COUNT(*) FROM products")
+    total_products = cur.fetchone()[0]
+
+    cur.execute("SELECT COUNT(*) FROM customers")
+    total_customers = cur.fetchone()[0]
+
+    cur.execute("SELECT * FROM products ORDER BY id DESC LIMIT 5")
+    products = cur.fetchall()
+
+    cur.execute("SELECT * FROM customers ORDER BY id DESC LIMIT 5")
+    customers = cur.fetchall()
+
+    return render_template('dashboard.html', total_products=total_products, total_customers=total_customers, products=products, customers=customers)
 
 # ! Product =>
 # add product
