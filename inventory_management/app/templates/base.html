@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}My Inventory{% endblock %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Additional CSS (if any) -->
+    {% block styles %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='dashboard.css') }}"
+    />
+    {% endblock %}
+  </head>
+  <body>
+    <div class="wrapper">
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          <div><i class="fa-solid fa-brush"></i></div>
+          <h3>Prathamesh Enterprises</h3>
+        </div>
+        <!-- Close Button -->
+        <button
+          id="sidebarClose"
+          class="btn btn-light btn-sm d-lg-none close-btn"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+
+        <ul class="list-unstyled components">
+          <li>
+            <a href="/" class="nav-link">
+              <i class="fas fa-tachometer-alt me-3"></i>Dashboard
+            </a>
+          </li>
+
+          <!-- Products Dropdown -->
+          <li>
+            <a
+              href="#productsSubmenu"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="dropdown-toggle nav-link"
+            >
+              <i class="fas fa-box me-3"></i>Products
+            </a>
+            <ul class="collapse list-unstyled" id="productsSubmenu">
+              <li>
+                <a href="/products/products_list" class="nav-link"
+                  >View Products</a
+                >
+              </li>
+              <li>
+                <a href="/products/add" class="nav-link">Add New Product</a>
+              </li>
+              <li>
+                <a href="/types/type_list" class="nav-link">View Types</a>
+              </li>
+              <li>
+                <a href="/types/add_type" class="nav-link">Add New Type</a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Customers Dropdown -->
+          <li>
+            <a
+              href="#customersSubmenu"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="dropdown-toggle nav-link"
+            >
+              <i class="fas fa-users me-3"></i>Customers
+            </a>
+            <ul class="collapse list-unstyled" id="customersSubmenu">
+              <li>
+                <a href="/customers/customer_list" class="nav-link"
+                  >Customer List</a
+                >
+              </li>
+              <li>
+                <a href="/customers/add" class="nav-link">Add New Customer</a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Suppliers Dropdown -->
+          <li>
+            <a
+              href="#suppliersSubmenu"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="dropdown-toggle nav-link"
+            >
+              <i class="fas fa-users me-3"></i>Suppliers
+            </a>
+            <ul class="collapse list-unstyled" id="suppliersSubmenu">
+              <li>
+                <a href="/suppliers/supplier_list" class="nav-link"
+                  >Supplier List</a
+                >
+              </li>
+              <li>
+                <a href="/suppliers/add" class="nav-link">Add New Supplier</a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Purchases Dropdown -->
+          <li>
+            <a
+              href="#purchaseSubmenu"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="dropdown-toggle nav-link"
+            >
+              <i class="fas fa-solid fa-user"></i>Purchases
+            </a>
+            <ul class="collapse list-unstyled" id="purchaseSubmenu">
+              <li>
+                <a href="/purchases/purchase_details" class="nav-link"
+                  >Purchase Details</a
+                >
+              </li>
+              <li>
+                <a href="/purchases/add_purchase" class="nav-link">
+                  Add Purchase
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Sales Dropdown -->
+          <li>
+            <a
+              href="#saleSubmenu"
+              data-toggle="collapse"
+              aria-expanded="false"
+              class="dropdown-toggle nav-link"
+            >
+              <i class="fa-solid fa-user"></i>Sales
+            </a>
+            <ul class="collapse list-unstyled" id="saleSubmenu">
+              <li>
+                <a href="/sales/sale_details" class="nav-link">Sale Details</a>
+              </li>
+              <li>
+                <a href="/sales/add_sale" class="nav-link"> Add Sale </a>
+              </li>
+            </ul>
+          </li>
+
+          <!-- Logout -->
+          <li>
+            <a href="/admin/logout" class="nav-link">
+              <i class="fas fa-sign-out-alt me-3"></i>Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
+          <div class="container-fluid">
+            <!-- Sidebar Toggle Button (Hidden on Large Screens) -->
+            <button
+              type="button"
+              id="sidebarCollapse"
+              class="btn btn-primary d-lg-none d-md-none"
+              style="margin: 10px"
+            >
+              <i class="fas fa-align-left"></i>
+            </button>
+
+            <!-- Profile Dropdown -->
+            <div class="dropdown ms-auto">
+              <button
+                class="btn btn-light border dropdown-toggle"
+                type="button"
+                id="adminProfileDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <i class="fas fa-user"></i>
+              </button>
+              <ul
+                class="dropdown-menu dropdown-menu-end"
+                aria-labelledby="adminProfileDropdown"
+              >
+                <li>
+                  <a class="dropdown-item" href="/">Profile</a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="/admin/logout">Logout</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <div class="page-wrapper">
+          {% block content %}
+          <!-- Content will be inserted here -->
+          {% endblock %}
+        </div>
+      </div>
+
+      <!-- Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

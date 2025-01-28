@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% block title %}Add Product{% endblock %} {% block
+content %}
+<div
+  class="modal fade"
+  id="addProductModal"
+  tabindex="-1"
+  aria-labelledby="addProductModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form id="addProductForm">
+          <div class="mb-3">
+            <label for="productName" class="form-label">Product Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="productName"
+              name="name"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="typeDropdown" class="form-label">Type</label>
+            <select
+              class="form-control"
+              id="typeDropdown"
+              name="type_id"
+              required
+            >
+              <option value="">Select Type</option>
+              {% for type in types %}
+              <option value="{{ type.type_id }}">{{ type.type_name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="salePrice" class="form-label">Sale Price</label>
+            <input
+              type="number"
+              class="form-control"
+              id="salePrice"
+              name="sale_price"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="stockThreshold" class="form-label"
+              >Stock Threshold</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="stockThreshold"
+              name="stock_threshold"
+              value="10"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Product</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

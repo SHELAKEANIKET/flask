@@ -1,0 +1,184 @@
+{% extends 'base.html' %} {% block title %}Add Sale{% endblock %} {% block
+content %}
+<div class="bg-white border p-4">
+  <form class="mt-4" id="saleForm" action="/sales/add_sale" method="POST">
+    <h2 class="mb-4">Add Sale Inventory</h2>
+    <div class="mb-3">
+      <select
+        class="form-control"
+        id="customerDropdown"
+        name="customer_id"
+        required
+      >
+        <option value="">Loading customers...</option>
+      </select>
+      <div class="my-2">
+        <button
+          type="button"
+          class="btn btn-success my-2"
+          id="addProductBtn"
+          data-bs-toggle="modal"
+          data-bs-target="#addProductModal"
+        >
+          Add New Product
+        </button>
+        <a href="/customers/add" class="btn btn-success mx-2"
+        >Add New Customer</a
+      >
+      </div>
+    </div>
+    <div id="saleProductsContainer" class="my-4">
+      <h5>Product Details</h5>
+      <div class="row mb-3">
+        <div class="col">
+          <select
+            class="form-control product-name-dropdown"
+            name="product_names[]"
+            required
+          >
+            <option value="">Select Product</option>
+            {% for product in products %}
+            <option
+              value="{{ product.name }}"
+              data-product-id="{{ product.product_id }}"
+              data-type-id="{{ product.type_id }}"
+            >
+              {{ product.name }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col">
+          <select
+            class="form-control product-type-dropdown"
+            name="product_types[]"
+            required
+            disabled
+          >
+            <option value="">Product Type</option>
+          </select>
+        </div>
+        <div class="col">
+          <input
+            type="hidden"
+            class="product-id"
+            name="product_ids[]"
+            value=""
+          />
+          <input type="hidden" class="type-id" name="type_ids[]" value="" />
+          <input
+            type="number"
+            class="form-control"
+            name="sale_price[]"
+            placeholder="Sale Price"
+            required
+          />
+        </div>
+        <div class="col">
+          <input
+            type="number"
+            class="form-control"
+            name="quantity[]"
+            placeholder="Quantity"
+            required
+          />
+        </div>
+        <div class="col">
+          <input
+            type="number"
+            class="form-control"
+            name="weight[]"
+            placeholder="Weight"
+          />
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-danger remove-row">
+            Remove
+          </button>
+        </div>
+      </div>
+    </div>
+    <button
+      type="button"
+      class="btn btn-secondary mb-3 fw-medium d-block"
+      id="addSaleRow"
+    >
+      Add Product Row
+    </button>
+    <button type="submit" class="btn btn-primary fw-bold">Add Sale</button>
+  </form>
+
+  <div
+    class="modal fade"
+    id="addProductModal"
+    tabindex="-1"
+    aria-labelledby="addProductModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form id="addProductForm" action="/products/add" method="POST">
+            <div class="mb-3">
+              <label for="productName" class="form-label">Product Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="productName"
+                name="name"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="typeDropdown" class="form-label">Type</label>
+              <select
+                class="form-control"
+                id="typeDropdown"
+                name="type_id"
+                required
+              >
+                <option value="">Select Type</option>
+                {% for type in types %}
+                <option value="{{ type.type_id }}">{{ type.type_name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="salePrice" class="form-label">Sale Price</label>
+              <input
+                type="number"
+                class="form-control"
+                id="salePrice"
+                name="sale_price"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="stockThreshold" class="form-label"
+                >Stock Threshold</label
+              >
+              <input
+                type="number"
+                class="form-control"
+                id="stockThreshold"
+                name="stock_threshold"
+                value="10"
+              />
+            </div>
+            <button type="submit" class="btn btn-success">Add Product</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block title %}Add Customer{% endblock %} {% block
+content %}
+<div class="container">
+  <div class="row">
+    <form
+      class="mt-4 mx-auto border p-4 bg-white col-lg-8"
+      method="POST"
+      action="/customers/add"
+    >
+      <h2 class="mb-4">Add Customer</h2>
+      <div class="mb-3">
+        <label for="name" class="form-label">Customer Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact</label>
+        <input
+          type="text"
+          class="form-control"
+          id="contact"
+          name="contact"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <textarea
+          class="form-control resize-none"
+          id="address"
+          name="address"
+          rows="3"
+        ></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary fw-bold">Add Customer</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

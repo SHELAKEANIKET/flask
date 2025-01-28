@@ -1,0 +1,42 @@
+{% extends 'base.html' %} {% block title %}Suppliers List{% endblock %} {% block
+content %}
+<div class="container my-4">
+  <h3 class="text-center">Suppliers List</h3>
+  <div class="table-responsive my-4">
+    <table class="table table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Sr. No.</th>
+          <th>Supplier Name</th>
+          <th>Contact</th>
+          <th>Address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for supplier in suppliers %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ supplier[1] }}</td>
+          <td>{{ supplier[2] }}</td>
+          <td>{{ supplier[3] }}</td>
+          <td>
+            <a
+              href="/suppliers/edit_supplier/{{ supplier[0] }}"
+              class="text-primary fw-medium px-1"
+              >Edit</a
+            >
+            |
+            <a
+              href="/suppliers/delete_supplier/{{ supplier[0] }}"
+              class="text-danger fw-medium px-1"
+              >Delete</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

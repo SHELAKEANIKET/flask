@@ -1,0 +1,36 @@
+{% extends 'base.html' %} {% block title %}Dashboard{% endblock %} {% block
+content %}
+<div class="container-fluid">
+  <h2>Dashboard</h2>
+  <!-- Cards Section -->
+  <div class="row g-3">
+    <div class="col-md-3">
+      <div class="card text-center shadow-sm card2 text-white">
+        <div class="card-body">
+          <h5 class="card-title">Total Suppliers</h5>
+          <p class="card-text display-6">{{total_suppliers}}</p>
+          <i class="fas fa-users me-3"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center shadow-sm card1 text-white">
+        <div class="card-body">
+          <h5 class="card-title">Total Products</h5>
+          <p class="card-text display-6">{{ total_products }}</p>
+          <i class="fas fa-box-open"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card text-center shadow-sm card3 text-white">
+        <div class="card-body">
+          <h5 class="card-title">Total Customers</h5>
+          <p class="card-text display-6">{{ total_customers }}</p>
+          <i class="fas fa-users me-3"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

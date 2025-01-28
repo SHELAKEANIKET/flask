@@ -1,0 +1,38 @@
+{% extends 'base.html' %} {% block title %}Add Type{% endblock %} {% block
+content %}
+<div class="container my-4">
+  <h3 class="text-center">Type List</h3>
+  <div class="table-responsive my-4">
+    <table class="table table-bordered">
+      <thead class="table-dark">
+        <tr>
+          <th>Sr. No.</th>
+          <th>Type Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for type in types %}
+        <tr>
+          <td>{{ loop.index }}</td>
+          <td>{{ type[1] }}</td>
+          <td>
+            <a
+              href="/types/edit_type/{{ type[0] }}"
+              class="text-primary fw-medium px-1"
+              >Edit</a
+            >
+            |
+            <a
+              href="/types/delete_type/{{ type[0] }}"
+              class="text-danger fw-medium px-1"
+              >Delete</a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

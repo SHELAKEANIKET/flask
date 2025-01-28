@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% block title %}Sale Details{% endblock %} {% block
+    content %}
+<div>
+    <form method="POST" action="/sales/sale_details" class="sale-details-form">
+        <label for="customer_name">Customer Name:</label>
+        <input type="text" name="customer_name" required>
+        
+        <label for="sale_date">Sale Date:</label>
+        <input type="date" name="sale_date" required>
+        
+        <button type="submit">Search</button>
+    </form>
+    
+     <!-- Display sales and Items -->
+     <h3 class="my-4 fs-4">Sale Details</h3>
+
+     {% if sales %}
+     <div class="sale-details">
+     <p>Customer : {{ sales[0].customer_name }}</p>
+     <p>Date : {{ sales[0].sale_date }}</p>
+     </div>  
+
+       <h3 class="my-2 fs-4">Items</h3>
+       <table class="table table-bordered">
+         <thead>
+           <tr>
+             <th>Product Name</th>
+             <th>Quantity</th>
+             <th>Unit Price</th>
+             <th>Total Amount</th>
+           </tr>
+         </thead>
+         <tbody>
+           {% for item in sale_items %}
+             <tr>
+               <td>{{ item.product_name }}</td>
+               <td>{{ item.quantity }}</td>
+               <td>{{ item.unit_price }}</td>
+               <td>{{ item.quantity * item.unit_price }}</td>
+             </tr>
+           {% endfor %}
+         </tbody>
+       </table>
+     {% else %}
+       <p>No sales found.</p>
+     {% endif %}
+</div>
+{% endblock %}

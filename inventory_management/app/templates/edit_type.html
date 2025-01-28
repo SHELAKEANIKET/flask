@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block title %}Edit Type{% endblock %} {% block
+    content %}
+    <div class="container">
+      <div class="row">
+        <form
+          class="container mt-4 border p-4 bg-white col-lg-8 col-sm-12"
+          method="POST"
+          action="/types/edit_type/{{ type[0] }}"
+        >
+          <h2 class="mb-4">Edit Type</h2>
+          <div class="mb-3">
+            <label for="type_name" class="form-label">Type Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="type_name"
+              name="type_name"
+              value="{{ type[1] }}"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary fw-bold">Edit Type</button>
+        </form>
+      </div>
+    </div>
+    {% endblock %}
+    

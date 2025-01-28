@@ -1,0 +1,49 @@
+{% extends 'base.html' %} {% block title %}Purchase Details{% endblock %} {% block
+    content %}
+<div>
+    <form method="POST" action="/purchases/purchase_details" class="purchase-details-form">
+        <label for="supplier_name">Supplier Name:</label>
+        <input type="text" name="supplier_name" required>
+        
+        <label for="purchase_date">Purchase Date:</label>
+        <input type="date" name="purchase_date" required>
+        
+        <button type="submit">Search</button>
+    </form>
+    
+    <!-- Display Purchases and Items -->
+  <h3 class="my-4 fs-4">Purchase Details</h3>
+
+{% if purchases %}
+<div class="purchase-details">
+  <p>Supplier : {{ purchases[0].supplier_name }}</p>
+  <p>Date : {{ purchases[0].purchase_date }}</p>
+</div>
+
+  <h3 class="my-2 fs-4">Items</h3>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in purchase_items %}
+        <tr>
+          <td>{{ item.product_name }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.unit_price }}</td>
+          <td>{{ item.quantity * item.unit_price }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No purchases found.</p>
+{% endif %}
+
+</div>   
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %} {% block title %}Edit Supplier{% endblock %} {% block
+content %}
+<div class="container">
+  <div class="row">
+    <form
+      class="mt-4 mx-auto border p-4 bg-white col-lg-8"
+      method="POST"
+      action="/suppliers/edit_supplier/{{ supplier[0] }}"
+    >
+      <h2 class="mb-4">Edit Supplier</h2>
+      <div class="mb-3">
+        <label for="name" class="form-label">supplier Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          value="{{ supplier[1] }}"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact</label>
+        <input
+          type="text"
+          class="form-control"
+          id="contact"
+          name="contact"
+          value="{{ supplier[2] }}"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="address" class="form-label">Address</label>
+        <textarea
+          class="form-control resize-none"
+          id="address"
+          name="address"
+          rows="3"
+        >
+{{ supplier[3] }}</textarea
+        >
+      </div>
+      <button type="submit" class="btn btn-primary fw-bold">
+        Edit supplier
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
