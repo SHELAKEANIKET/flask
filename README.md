@@ -1,1 +1,1 @@
-# Flask Project
+# Inventory Management
