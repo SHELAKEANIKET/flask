@@ -41,7 +41,7 @@ class Sale:
          cur.execute(
              """
              UPDATE products
-             SET stock_quantity = stock_quantity - %s,
+             SET stock_quantity = stock_quantity - %s
              WHERE product_id = %s
              """,
              (quantity, product_id),
