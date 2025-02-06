@@ -2,12 +2,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const sidebar = document.getElementById("sidebar");
   const sidebarToggle = document.getElementById("sidebarCollapse");
   const sidebarClose = document.getElementById("sidebarClose");
-  
+
   // Toggle sidebar
   sidebarToggle.addEventListener("click", () => {
     sidebar.classList.toggle("active");
   });
-  
+
   // Close sidebar when clicking the close button
   sidebarClose.addEventListener("click", () => {
     sidebar.classList.remove("active");
@@ -79,6 +79,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         <option value="${customer.customer_id}">${customer.name}</option>
                     `;
         });
+        new Choices(customerDropdown, {
+          placeholder: true,
+          searchEnabled: true,
+          itemSelectText: "", // Removes "Press to select" text
+          shouldSort: false, // Keeps options in original order
+        });
       })
       .catch((error) => {
         console.error("Error fetching customers:", error);
@@ -102,6 +108,12 @@ document.addEventListener("DOMContentLoaded", function () {
                         <option value="${supplier.supplier_id}">${supplier.name}</option>
                     `;
         });
+        new Choices(supplierDropdown, {
+          placeholder: true,
+          searchEnabled: true,
+          itemSelectText: "", // Removes "Press to select" text
+          shouldSort: false, // Keeps options in original order
+        });
       })
       .catch((error) => {
         console.error("Error fetching suppliers:", error);
@@ -113,11 +125,10 @@ document.addEventListener("DOMContentLoaded", function () {
   //! Add rows for the purchase form
   const addRowButton = document.getElementById("addRow");
   const productsContainer = document.getElementById("productsContainer");
-
   if (addRowButton && productsContainer) {
     addRowButton.addEventListener("click", async function () {
       const newRow = document.createElement("div");
-      newRow.classList.add("row", "mb-3");
+      newRow.classList.add("row", "mb-3", "row-cols-1", "row-cols-sm-2", "row-cols-md-2", "row-cols-lg-6");
 
       try {
         // Fetch the products data dynamically
@@ -134,30 +145,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Add the new row with fetched data
         newRow.innerHTML = `
-            <div class="col">
+            <div class="col mb-3 mb-sm-1">
               <select class="form-control product-name-dropdown" name="product_names[]" required>
                 <option value="">Select Product</option>
                 ${productOptions}
               </select>
             </div>
-            <div class="col">
+            <div class="col mb-3 mb-sm-1">
               <select class="form-control product-type-dropdown" name="product_types[]" required disabled>
                 <option value="">Product Type</option>
               </select>
             </div>
-            <div class="col">
+            <div class="col mb-3 mb-sm-1">
               <input type="hidden" class="product-id" name="product_ids[]" />
               <input type="hidden" class="type-id" name="type_ids[]" />
               <input type="number" class="form-control" name="purchase_price[]" placeholder="Purchase Price" required>
             </div>
-            <div class="col">
+            <div class="col mb-3 mb-sm-1">
               <input type="number" class="form-control" name="quantity[]" placeholder="Quantity" required>
             </div>
-            <div class="col">
+            <div class="col mb-3 mb-sm-1">
               <input type="number" class="form-control" name="weight[]" placeholder="Weight">
             </div>
-            <div class="col">
-              <button type="button" class="btn btn-danger remove-row">Remove</button>
+            <div class="col mb-3 mb-sm-1">
+              <button type="button" class="btn btn-danger remove-row"><i class="fa-solid fa-trash"></i></button>
             </div>
           `;
 
@@ -172,11 +183,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const row = this.closest(".row");
 
-            // Debugging outputs
-            // console.log("Product ID:", productId);
-            // console.log("Type ID in new row:", typeId);
-            // console.log("Row:", row);
-
             // Update hidden fields for the current row
             row.querySelector(".product-id").value = productId || "";
             row.querySelector(".type-id").value = typeId || "";
@@ -188,6 +194,14 @@ document.addEventListener("DOMContentLoaded", function () {
           .addEventListener("click", function () {
             newRow.remove();
           });
+
+        // Initialize Choices for the new dropdown
+        const newDropdown = newRow.querySelector(".product-name-dropdown");
+        new Choices(newDropdown, {
+          placeholder: true,
+          searchEnabled: true,
+          itemSelectText: "",
+        });
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -199,11 +213,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const saleProductsContainer = document.getElementById(
     "saleProductsContainer"
   );
-
   if (addSaleRowButton && saleProductsContainer) {
     addSaleRowButton.addEventListener("click", async function () {
       const newRow = document.createElement("div");
-      newRow.classList.add("row", "mb-3");
+      newRow.classList.add("row", "mb-3", "row-cols-1", "row-cols-sm-2", "row-cols-md-2", "row-cols-lg-6");
 
       try {
         // Fetch the products data dynamically
@@ -219,30 +232,30 @@ document.addEventListener("DOMContentLoaded", function () {
           .join("");
 
         newRow.innerHTML = `
-        <div class="col">
+        <div class="col mb-3 mb-sm-1">
           <select class="form-control product-name-dropdown" name="product_names[]" required>
             <option value="">Select Product</option>
             ${productOptions}
           </select>
         </div>
-        <div class="col">
+        <div class="col mb-3 mb-sm-1">
           <select class="form-control product-type-dropdown" name="product_types[]" required disabled>
             <option value="">Product Type</option>
           </select>
         </div>
-        <div class="col">
+        <div class="col mb-3 mb-sm-1">
           <input type="hidden" class="product-id" name="product_ids[]" />
           <input type="hidden" class="type-id" name="type_ids[]" />
           <input type="number" class="form-control" name="sale_price[]" placeholder="Sale Price" required>
         </div>
-        <div class="col">
+        <div class="col mb-3 mb-sm-1">
           <input type="number" class="form-control" name="quantity[]" placeholder="Quantity" required>
         </div>
-        <div class="col">
+        <div class="col mb-3 mb-sm-1">
           <input type="number" class="form-control" name="weight[]" placeholder="Weight">
         </div>
-        <div class="col">
-          <button type="button" class="btn btn-danger remove-row">Remove</button>
+        <div class="col mb-3 mb-sm-1">
+          <button type="button" class="btn btn-danger remove-row"><i class="fa-solid fa-trash"></i></button>
         </div>
       `;
 
@@ -273,6 +286,14 @@ document.addEventListener("DOMContentLoaded", function () {
           .addEventListener("click", function () {
             newRow.remove();
           });
+
+        // Initialize Choices for the new dropdown
+        const newDropdown = newRow.querySelector(".product-name-dropdown");
+        new Choices(newDropdown, {
+          placeholder: true,
+          searchEnabled: true,
+          itemSelectText: "",
+        });
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -402,45 +423,64 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-  //* modal for add new product
-  document.addEventListener("DOMContentLoaded", () => {
-    // Initialize the modal
-    const addProductModal = new bootstrap.Modal(
-      document.getElementById("addProductModal")
-    );
-
-    // Add event listener for the form submission
-    document
-      .getElementById("addProductForm")
-      .addEventListener("submit", (event) => {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const jsonData = Object.fromEntries(formData);
-
-        fetch("/products/add", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(jsonData),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.success) {
-              alert("Product added successfully!");
-              addProductModal.hide();
-              location.reload(); // Optional: Reload to show updated data
-            } else {
-              alert("Error adding product: " + data.error);
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
-      });
-  });
+  //! dropdown with searchbar
+  const purchaseProductDropdown = document.getElementById(
+    "purchaseProductDropdown"
+  );
+  if (purchaseProductDropdown) {
+    new Choices(purchaseProductDropdown, {
+      searchEnabled: true, // Enables search
+      placeholder: true, // Enables placeholder
+      itemSelectText: "", // Removes "Press to select" text
+    });
+  }
+  const saleProductDropdown = document.getElementById("saleProductDropdown");
+  if (saleProductDropdown) {
+    new Choices(saleProductDropdown, {
+      searchEnabled: true, // Enables search
+      placeholder: true, // Enables placeholder
+      itemSelectText: "", // Removes "Press to select" text
+    });
+  }
 });
 
+//* modal for add new product
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize the modal
+  const addProductModal = new bootstrap.Modal(
+    document.getElementById("addProductModal")
+  );
+
+  // Add event listener for the form submission
+  document
+    .getElementById("addProductForm")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const jsonData = Object.fromEntries(formData);
+
+      fetch("/products/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            alert("Product added successfully!");
+            addProductModal.hide();
+            location.reload(); // Optional: Reload to show updated data
+          } else {
+            alert("Error adding product: " + data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+});
 //* chart js
 // const ctx = document.getElementById("myChart");
 // const labels = [

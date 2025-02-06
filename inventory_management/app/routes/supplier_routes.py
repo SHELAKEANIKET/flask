@@ -28,7 +28,7 @@ def add_supplier():
         address = request.form['address']
         contact = request.form['contact']
         Supplier.add_supplier(name, address, contact)
-        return redirect(url_for('supplier.supplier_list'))
+        return redirect(url_for('purchase.add_purchase'))
     return render_template('add_supplier.html')
 
 # Edit supplier

@@ -28,7 +28,7 @@ def add_customer():
         address = request.form['address']
         contact = request.form['contact']
         Customer.add_customer(name, address, contact)
-        return redirect(url_for('customer.customer_list'))
+        return redirect(url_for('sale.add_sale'))
     return render_template('add_customer.html')
 
 # Edit customer
